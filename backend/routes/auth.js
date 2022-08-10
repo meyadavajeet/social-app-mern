@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const UserModel = require('../models/User');
+const User = require('../models/User');
 
 /**
  * authController
@@ -10,14 +10,18 @@ const UserModel = require('../models/User');
 /**
  * Register New User
  */
-router.get("/register", async (req, res) => {
-    const user = await new UserModel({
-        username: "Ajeet3",
-        email: "ajeet3@gmail.com",
-        password: "123456"
+router.post("/register", async (req, res) => {
+    const newUser = await new User({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email,
     });
-    await user.save();
-    res.send("OK");
-})
+    try {
+        const user = await newUser.save();
+        res.status(200).json(user);
+    } catch (error) {
+        console.log(error);
+    }
+});
 
 module.exports = router;
