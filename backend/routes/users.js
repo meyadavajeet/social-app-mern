@@ -75,7 +75,7 @@ router.delete("/:id", async (req, res) => {
  * follow a user
  */
 
-router.put("/:id/follow", async function (req, res) {
+router.put("/:id/follow", async (req, res) => {
     if (req.body.userId !== req.params.id) {
         try {
             // user you want to follow
@@ -108,4 +108,34 @@ router.put("/:id/follow", async function (req, res) {
 /**
  * unfollow a user
  */
+router.put("/:id/unfollow", async (req, res) => {
+    if (req.body.userId !== req.params.id) {
+        try {
+            // user you want to follow
+            const user = await User.findById(req.params.id);
+
+            //current user information
+            const currentUser = await User.findById(req.body.userId);
+
+            if (user.followers.includes(req.body.userId)) {
+                //update follower of whom you want to follow
+                await user.updateOne({ $pull: { followers: req.body.userId } });
+
+                //update following of current user
+                await currentUser.updateOne({ $pull: { following: req.params.id } });
+
+                return res.status(200).json({ "message": `User has been unfollowed!!` });
+
+            } else {
+                return res.status(403).json({ "message": `you don't follow this user` });
+            }
+
+        } catch (err) {
+            return res.status(500).json({ "message": err.message });
+        }
+    } else {
+        return res.status(403).json({ "message": `You can't unfollow yourself!!` })
+    }
+})
+
 module.exports = router;
