@@ -8,6 +8,7 @@ const connectDbs = require('./config/database');
 require('colors')
 const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
+const postRoute = require('./routes/posts');
 
 /**
  * use env
@@ -41,6 +42,9 @@ app.use("/api/v1/users", userRoute);
 
 //auth routes
 app.use("/api/v1/auth", authRoute);
+
+//post routes
+app.use("/api/v1/posts", postRoute);
 
 /**
 *============================================================================
