@@ -27,6 +27,9 @@ router.post("/", async (req, res) => {
 router.put("/:id", async (req, res) => {
     try {
         const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ "message": "Post not found" });
+        }
         if (post.userId === req.body.userId) {
             await post.updateOne({ $set: req.body });
             return res.status(200).json({ "message": "post updated successfully." });
@@ -36,11 +39,26 @@ router.put("/:id", async (req, res) => {
     } catch (err) {
         return res.status(500).json({ "message": err.meessage });
     }
-
-})
+});
 /**
  * delete a post
  */
+router.delete("/:id", async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ "message": "Post not found" });
+        }
+        if (post.userId === req.body.userId) {
+            await Post.findByIdAndDelete(req.params.id);
+            return res.status(200).json({ "message": "Post deleted successfully." });
+        } else {
+            return res.status(404).json({ "message": "You can delete only your post" });
+        }
+    } catch (err) {
+        return res.status(500).json({ "message": err });
+    }
+});
 
 /**
  * like a post
@@ -49,6 +67,24 @@ router.put("/:id", async (req, res) => {
 /**
  * get a post
  */
+router.get("/:id", async (req, res) => {
+    try {
+        const post = await Post.findById(req.params.id);
+        if (!post) {
+            return res.status(404).json({ "message": "Post not found" });
+        }
+        if (post.userId === req.body.userId) {
+            const { updatedAt, ...others } = post._doc;
+            return res.status(200).json({ "data": others });
+        } else {
+            return res.status(404).json({ "message": "You can see only your post" });
+        }
+
+    } catch (err) {
+        return res.status(500).json({ "message": err });
+    }
+});
+
 
 /**
  * get timeline post of user
