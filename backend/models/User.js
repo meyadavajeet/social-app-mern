@@ -35,6 +35,22 @@ const UserSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    description: {
+        type: String,
+        max: 255,
+    },
+    city: {
+        type: String,
+        max: 255,
+    },
+    from: {
+        type: String,
+        max: 50,
+    },
+    relationship: {
+        type: Number,
+        emum: [1, 2, 3]
+    },
     isAdmin: {
         type: Boolean,
         default: false
