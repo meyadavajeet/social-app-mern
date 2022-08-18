@@ -1,10 +1,12 @@
 // import logo from './logo.svg';
 // import './App.css';
 
+import Home from "./pages/home/Home";
+
 function App() {
   return (
     <>
-    <h1>Hello Quick Post</h1>
+      <Home />
     </>
   );
 }
