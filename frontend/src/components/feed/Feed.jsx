@@ -1,4 +1,4 @@
-import Share from '../../share/Share';
+import Share from '../../components/share/Share';
 import Post from '../post/Post';
 import './feed.css';
 import { Posts } from '../../dummyData';

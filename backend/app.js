@@ -9,6 +9,36 @@ require('colors')
 const userRoute = require('./routes/users');
 const authRoute = require('./routes/auth');
 const postRoute = require('./routes/posts');
+const conversationRoute = require('./routes/conversations');
+const messageRoute = require('./routes/messages');
+
+// const swaggerJsdoc = require('swagger-jsdoc');
+// const swaggerUi = require('swagger-jsdoc-ui');
+
+
+// /*
+//  * swaggger configuration
+//  */
+
+// const swaggerOptions = {
+//    failOnErrors: true, // Whether or not to throw when parsing errors. Defaults to false.
+//    swaggerDefinition: {
+//       openapi: '1.0.0',
+//       info: {
+//          title: 'Quick Post',
+//          description:"Quick Post Application Apis list",
+//          version: '1.0.0',
+//          contact: {
+//             name:"Ajeet Yadav",
+//          },
+//          server: [`http://localhost:${process.env.SERVER_PORT}`]
+//       },
+//    },
+//    apis: ['./routes*.js'],
+// };
+
+// const swaggerDocs = swaggerJsdoc(swaggerOptions);
+// api.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDocs));
 
 /**
  * use env
@@ -45,6 +75,12 @@ app.use("/api/v1/auth", authRoute);
 
 //post routes
 app.use("/api/v1/posts", postRoute);
+
+//conversation routes
+app.use("/api/v1/conversations", conversationRoute);
+
+//messages routes
+app.use("/api/v1/messages", messageRoute);
 
 /**
 *============================================================================
